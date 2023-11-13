@@ -23,6 +23,7 @@ export const AuthContextProvider = ({ children, className="" }) => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 setUser(userCredential.user);
+                console.log('Created new user');
             })
             .catch((error) => {
                 console.error(`Create User Error ${error.code}: ${error.message}`);
@@ -33,6 +34,7 @@ export const AuthContextProvider = ({ children, className="" }) => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 setUser(userCredential);
+                console.log('Signed in');
             })
             .catch((error) => {
                 console.error(`Signin Error ${error.code}: ${error.message}`);
@@ -43,6 +45,7 @@ export const AuthContextProvider = ({ children, className="" }) => {
         signOut(auth)
             .then(() => {
                 // Signout successful
+                console.log('Signed out');
             })
             .catch((error) => {
                 console.error(`Signout Error ${error.code}: ${error.message}`);
@@ -58,7 +61,7 @@ export const AuthContextProvider = ({ children, className="" }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ createUser, signInUser, signOutUser }} className={className}>
+        <AuthContext.Provider value={{ createUser, signInUser, signOutUser, user }} className={className}>
             { children }
         </AuthContext.Provider>
     )

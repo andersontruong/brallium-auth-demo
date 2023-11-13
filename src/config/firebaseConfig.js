@@ -12,17 +12,13 @@ import { getAuth } from "firebase/auth"
 
 const firebaseConfig = {
 
-  apiKey: "AIzaSyBCkleUiQsrYEp10qJHZeLMXtfcvCnirnw",
+  apiKey: process.env.REACT_APP_API_KEY,
 
-  authDomain: "fir-user-demo-c2648.firebaseapp.com",
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
 
-  projectId: "fir-user-demo-c2648",
+  projectId: process.env.REACT_APP_PROJECT_ID,
 
-  storageBucket: "fir-user-demo-c2648.appspot.com",
-
-  messagingSenderId: "486365534347",
-
-  appId: "1:486365534347:web:5150f08e202fa437839c8e"
+  appId: process.env.REACT_APP_APP_ID
 
 };
 
