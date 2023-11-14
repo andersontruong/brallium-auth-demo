@@ -5,10 +5,15 @@ import Axios from "axios";
 export default function SignInPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const { createUser, signInUser, signOutUser, user } = UserAuth();
+    const { createUser, signInUser, signOutUser, user, setUser } = UserAuth();
 
     useEffect(() => {
         console.log(`User changed to ${JSON.stringify(user)}`);
+
+        if (user) {
+            // redirectTo('/home')
+        }
+
     }, [user]);
 
     const handleChangeEmail = (event) => {

@@ -38,6 +38,7 @@ app.listen(PORT, () => {
  * @returns An `Array` of `[ user, doc ]`
  */
 async function verifyRequest (req, res) {
+    console.log('verify request')
     let auth = req.headers.authorization;
     if (!auth) {
         res.status(401);
@@ -51,12 +52,14 @@ async function verifyRequest (req, res) {
     }
     const token = auth.split(' ')[1]
     const user = await verifyToken(token);
+    console.log(user);
+
     if (!user) {
         res.status(401);
         res.send('Unauthorized: invalid user');
         return false;
     }
-
+    
     // Create a new user if does not exist
     let existingUser = await UserModel.findOne({ firebaseId: user.uid });
     if (!existingUser) {
@@ -70,6 +73,18 @@ async function verifyRequest (req, res) {
 
     return existingUser;
 }
+
+app.get('/userPurchases', async (req, res) => {
+    const user = await verifyRequest(req, res);
+    if (!user) {
+        console.log('Invalid user');
+        res.status(401);
+        return;
+    }
+
+    // MongoDB find all PurchaseObjects with user.uid
+    // return PurchaseObjects
+});
 
 app.get('/getUser', async (req, res) => {
     const user = await verifyRequest(req, res);

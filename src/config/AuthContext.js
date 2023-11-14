@@ -12,7 +12,7 @@ const AuthContext = createContext();
 
 /**
  *  Defines a set of functions that can be used throughout the application related to 
- * user login information and google sign-in or sign-out functionality
+ * user login information and Email/Password sign-in or sign-out functionality
  * @returns {AuthContext.Provider} `AuthContext.Provider` Component
  */
 export const AuthContextProvider = ({ children, className="" }) => {
@@ -20,14 +20,7 @@ export const AuthContextProvider = ({ children, className="" }) => {
 
     // See https://firebase.google.com/docs/auth/web/password-auth
     const createUser = (email, password) => {
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                setUser(userCredential.user);
-                console.log('Created new user');
-            })
-            .catch((error) => {
-                console.error(`Create User Error ${error.code}: ${error.message}`);
-            });
+        return createUserWithEmailAndPassword(auth, email, password);
     }
 
     const signInUser = (email, password) => {
@@ -61,7 +54,7 @@ export const AuthContextProvider = ({ children, className="" }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ createUser, signInUser, signOutUser, user }} className={className}>
+        <AuthContext.Provider value={{ createUser, signInUser, signOutUser, user, setUser }} className={className}>
             { children }
         </AuthContext.Provider>
     )
