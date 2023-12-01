@@ -1,50 +1,28 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import './App.css';
 
+function Review({ reviewObj }) {
+  return (
+    <div className="flex flex-col h-[500px] bg-red-200 p-10">
+      <h1>{reviewObj.title}</h1>
+      <h1>{reviewObj.author}</h1>
+    </div>
+  )
+}
+
 function App() {
-  const [loginEnabled, setLoginEnabled] = useState(false);
-  const [signupEnabled, setSignupEnabled] = useState(false);
+  const reviews = [ { title: "Great product", author: "Author A"}, { title: "Great product", author: "Author A"}, { title: "Great product", author: "Author A"} ];
+  const scrollRef = useRef(null);
+
+  const executeScroll = () => scrollRef.current.scrollIntoView({ behavior: "smooth" });
   
   return (
-    <div className="flex flex-col items-center h-screen bg-blue-100">
-      <nav className="w-full h-[100px] bg-green-100">
-
-      </nav>
-
-      <button
-        className="bg-green-400 hover:bg-green-700 rounded-xl p-5"
-        onClick={() => { setLoginEnabled(true); }}
-      >
-        Login
-      </button>
-
-      
-
-      <div className={`${loginEnabled ? 'flex flex-col' : 'hidden'} w-2/3 h-2/3 bg-orange-300 fixed top-[200px]`
-          }>
-            <button
-              className="bg-red-300 hover:bg-red-500 rounded-xl p-5"
-              onClick={() => { setLoginEnabled(false); }}
-            >
-              Exit Login
-          </button>
-
-          <button
-            className="bg-blue-400 hover:bg-blue-700 rounded-xl p-5"
-            onClick={() => { setSignupEnabled(true); setLoginEnabled(false); }}
-          >
-            New user? Create an account
-          </button>
-      </div>
-      <div className={`${signupEnabled ? 'flex flex-col' : 'hidden'} w-2/3 h-2/3 bg-purple-300 fixed top-[200px]`
-          }>
-            <button
-              className="bg-red-300 hover:bg-red-500 rounded-xl p-5"
-              onClick={() => { setSignupEnabled(false); }}
-            >
-              Exit Signup
-          </button>
-      </div>
+    <div className="flex flex-col space-y-10 items-center min-h-screen bg-blue-100">
+      <button onClick={executeScroll} className="p-10 bg-white">Scroll</button>
+      {
+        reviews.map((reviewObj) => <Review reviewObj={reviewObj} />)
+      }
+      <div ref={scrollRef} className="p-20 bg-green-200">Scroll to here</div>
     </div>
   );
 }
